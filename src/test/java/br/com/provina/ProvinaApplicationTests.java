@@ -1,10 +1,10 @@
-package br.com.footbook.footbook;
+package br.com.provina;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class FootbookApplicationTests {
+class ProvinaApplicationTests {
 
 	@Test
 	void contextLoads() {
