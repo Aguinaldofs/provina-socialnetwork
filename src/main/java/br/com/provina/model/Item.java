@@ -35,6 +35,9 @@ public class Item {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Upvote> upvotes = new ArrayList<>();
 
+	public Item() {
+	}
+
 	public Item(String name, String url, Category category) {
 		this.name = name;
 		this.url = url;
@@ -71,9 +74,6 @@ public class Item {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public Item() {
 	}
 
 	public void setCreationdate(LocalDateTime creationdate) {

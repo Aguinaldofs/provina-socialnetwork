@@ -7,10 +7,14 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,10 +44,11 @@ public class ItemController {
 	@Autowired
 	private CategoryRepository categoryRepository;
 
+	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping
-	public Page<ItemDto> list(@RequestParam(required = false) String categoryName, @RequestParam int page,
-			@RequestParam int pages) {
-		Pageable pagination = PageRequest.of(page, pages);
+	@Cacheable(value = "itemsList")
+	public Page<ItemDto> list(@RequestParam(required = false) String categoryName,
+			@PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable pagination) {
 
 		if (categoryName == null) {
 			Page<Item> items = itemRepository.findAll(pagination);
@@ -52,11 +57,14 @@ public class ItemController {
 			Page<Item> items = itemRepository.findByCategoryName(categoryName, pagination);
 			return ItemDto.convert(items);
 		}
+
 	}
 
 	@PostMapping
 	@Transactional
+	@CacheEvict(value = "itemsList", allEntries = true)
 	public ResponseEntity<ItemDto> register(@RequestBody @Valid ItemForm form, UriComponentsBuilder uriBuilder) {
+
 		Item item = form.convert(categoryRepository);
 		itemRepository.save(item);
 

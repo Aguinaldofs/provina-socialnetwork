@@ -1,13 +1,16 @@
 package br.com.provina.controller;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +25,7 @@ import br.com.provina.controller.dto.ItemDto;
 import br.com.provina.controller.dto.UserDetailDto;
 import br.com.provina.controller.dto.UserDto;
 import br.com.provina.controller.form.UserForm;
+import br.com.provina.model.Item;
 import br.com.provina.model.User;
 import br.com.provina.repository.UserRepository;
 
@@ -44,11 +48,12 @@ public class UserController {
 	}
 
 	@GetMapping("/{id}/items")
-	public ResponseEntity<List<ItemDto>> itemlist(@PathVariable Long id) {
+	public ResponseEntity<Page<ItemDto>> itemlist(@PathVariable Long id,
+			@PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable pagination) {
 		Optional<User> user = userRepository.findById(id);
 
 		if (user.isPresent()) {
-			List<ItemDto> item = ItemDto.convert(user.get().getItem());
+			Page<ItemDto> item = ItemDto.convert((Page<Item>) user.get().getItem());
 			return ResponseEntity.status(200).body(item);
 		}
 		return ResponseEntity.status(404).build();
