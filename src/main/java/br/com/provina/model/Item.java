@@ -39,6 +39,7 @@ public class Item {
 	}
 
 	public Item(String name, String url, Category category) {
+		super();
 		this.name = name;
 		this.url = url;
 		this.category = category;
@@ -68,12 +69,8 @@ public class Item {
 		return creationdate;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public void setCreationdate(LocalDateTime creationdate) {
