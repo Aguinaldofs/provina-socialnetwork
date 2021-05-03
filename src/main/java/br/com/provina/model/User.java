@@ -26,6 +26,9 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Comment> comments;
+	@OneToMany(mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private List<Upvote> upvotes;
 
 	public User() {
 

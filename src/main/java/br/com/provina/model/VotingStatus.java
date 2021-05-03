@@ -1,6 +1,6 @@
 package br.com.provina.model;
 
-public enum ItemStatus {
+public enum VotingStatus {
 
 	UPVOTE, DOWNVOTE, STANDBY
 

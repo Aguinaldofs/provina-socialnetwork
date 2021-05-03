@@ -6,7 +6,7 @@ import br.com.provina.model.Comment;
 
 public class CommentDto {
 
-	private int id;
+	private long id;
 	private String message;
 	private LocalDateTime creationDate;
 	private String username;
@@ -18,7 +18,7 @@ public class CommentDto {
 		this.username = comment.getUser().getName();
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 

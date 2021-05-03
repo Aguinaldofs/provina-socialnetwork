@@ -31,15 +31,38 @@ public class Item {
 	@OneToMany(mappedBy = "item", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Comment> comments = new ArrayList<>();
-
-	public LocalDateTime getCreationdate() {
-		return creationdate;
-	}
+	@OneToMany(mappedBy = "item", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private List<Upvote> upvotes = new ArrayList<>();
 
 	public Item(String name, String url, Category category) {
 		this.name = name;
 		this.url = url;
 		this.category = category;
+	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
+	public List<Upvote> getUpvotes() {
+		return upvotes;
+	}
+
+	public void setUpvotes(List<Upvote> upvotes) {
+		this.upvotes = upvotes;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public LocalDateTime getCreationdate() {
+		return creationdate;
 	}
 
 	public long getId() {
