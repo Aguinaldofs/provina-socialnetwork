@@ -24,7 +24,6 @@ public class Item {
 	private String name;
 	private LocalDateTime creationdate = LocalDateTime.now();
 	private String url;
-	private Boolean voting = false;
 	@ManyToOne
 	private User owner;
 	@ManyToOne
@@ -72,14 +71,6 @@ public class Item {
 
 	public void setCategory(Category category) {
 		this.category = category;
-	}
-
-	public boolean isVoting() {
-		return voting;
-	}
-
-	public void setVoting(boolean voting) {
-		this.voting = voting;
 	}
 
 	public String getName() {

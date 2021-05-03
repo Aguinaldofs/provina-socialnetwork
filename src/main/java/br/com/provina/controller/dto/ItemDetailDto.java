@@ -14,7 +14,6 @@ public class ItemDetailDto {
 	private String message;
 	private LocalDateTime creationdate = LocalDateTime.now();
 	private String url;
-	private Boolean voting = false;
 	private List<CommentDto> comments;
 
 	public ItemDetailDto(Item item) {
@@ -22,7 +21,6 @@ public class ItemDetailDto {
 		this.name = item.getName();
 		this.creationdate = item.getCreationdate();
 		this.url = item.getUrl();
-		this.voting = item.isVoting();
 		this.comments = new ArrayList<>();
 		this.comments.addAll(item.getComments().stream().map(CommentDto::new).collect(Collectors.toList()));
 	}
@@ -45,10 +43,6 @@ public class ItemDetailDto {
 
 	public String getUrl() {
 		return url;
-	}
-
-	public Boolean getVoting() {
-		return voting;
 	}
 
 	public List<CommentDto> getComments() {
