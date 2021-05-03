@@ -1,8 +1,8 @@
 package br.com.provina.controller.dto;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
 
 import br.com.provina.model.Item;
 
@@ -30,9 +30,9 @@ public class ItemDto {
 		return url;
 	}
 
-	public static List<ItemDto> convert(List<Item> items) {
+	public static Page<ItemDto> convert(Page<Item> items) {
 
-		return items.stream().map(ItemDto::new).collect(Collectors.toList());
+		return items.map(ItemDto::new);
 	}
 
 }
