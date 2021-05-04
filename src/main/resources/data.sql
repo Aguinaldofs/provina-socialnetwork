@@ -1,4 +1,4 @@
-INSERT INTO USER(name, email, password) VALUES('Aguinaldo', 'aguinaldojunior@gec.inatel.br', '123456');
+INSERT INTO USER(name, email, password) VALUES('Aguinaldo', 'aguinaldojunior@gec.inatel.br', '$2a$10$gjhp5CWxCl/tOUosLTwrMOt/H45h1/0hJUH6CdixQhX9AAw/XktRG');
 
 INSERT INTO CATEGORY(name, category) VALUES('Engenharia da Computação','Algoritmos');
 INSERT INTO CATEGORY(name, category) VALUES('Engenharia de Software','Algoritmos');
