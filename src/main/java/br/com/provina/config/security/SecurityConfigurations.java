@@ -21,6 +21,9 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private AuthenticationService authenticationService;
 
+	@Autowired
+	private TokenService tokenService;
+
 	@Override
 	@Bean
 	protected AuthenticationManager authenticationManager() throws Exception {
@@ -41,8 +44,8 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers(HttpMethod.GET, "/items").permitAll()
 				.antMatchers(HttpMethod.GET, "/items/*").permitAll().antMatchers(HttpMethod.POST, "/auth").permitAll()
 				.anyRequest().authenticated().and().csrf().disable().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-				.addFilterBefore(new TokenFilterAuthentication(), UsernamePasswordAuthenticationFilter.class);
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().addFilterBefore(
+						new TokenFilterAuthentication(tokenService), UsernamePasswordAuthenticationFilter.class);
 
 	}
 
