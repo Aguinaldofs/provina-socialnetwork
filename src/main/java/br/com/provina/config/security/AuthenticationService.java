@@ -25,7 +25,7 @@ public class AuthenticationService implements UserDetailsService {
 			return user.get();
 		}
 
-		throw new UsernameNotFoundException("Invalid");
+		throw new UsernameNotFoundException("Invalid data!");
 	}
 
 }
