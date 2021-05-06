@@ -39,7 +39,6 @@ public class Item {
 	}
 
 	public Item(String name, String url, Category category) {
-		super();
 		this.name = name;
 		this.url = url;
 		this.category = category;

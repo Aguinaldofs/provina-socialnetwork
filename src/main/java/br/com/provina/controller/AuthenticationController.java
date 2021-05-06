@@ -20,7 +20,7 @@ import br.com.provina.controller.form.LoginForm;
 
 @RestController
 @RequestMapping("/auth")
-@Profile("prod")
+@Profile(value = { "prod", "test" })
 public class AuthenticationController {
 
 	@Autowired

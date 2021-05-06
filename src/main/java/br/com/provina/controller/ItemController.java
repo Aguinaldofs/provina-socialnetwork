@@ -1,6 +1,8 @@
 package br.com.provina.controller;
 
+import java.io.IOException;
 import java.net.URI;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -24,12 +26,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.provina.config.cloudinary.CloudinaryService;
 import br.com.provina.controller.dto.ItemDetailDto;
 import br.com.provina.controller.dto.ItemDto;
-import br.com.provina.controller.form.ItemForm;
 import br.com.provina.controller.form.ItemFormUpdate;
+import br.com.provina.model.Category;
 import br.com.provina.model.Item;
 import br.com.provina.repository.CategoryRepository;
 import br.com.provina.repository.ItemRepository;
@@ -43,6 +47,9 @@ public class ItemController {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
+
+	@Autowired
+	private CloudinaryService cloudinaryService;
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping
@@ -63,9 +70,16 @@ public class ItemController {
 	@PostMapping
 	@Transactional
 	@CacheEvict(value = "itemsList", allEntries = true)
-	public ResponseEntity<ItemDto> register(@RequestBody @Valid ItemForm form, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<ItemDto> register(@RequestParam("name") String name,
+			@RequestParam("nameCategory") String nameCategory, @RequestParam("file") MultipartFile file,
+			UriComponentsBuilder uriBuilder) throws IOException {
+		Category category = categoryRepository.findByName(nameCategory);
 
-		Item item = form.convert(categoryRepository);
+		Map uploadResult = cloudinaryService.upload(file, "images");
+
+		@SuppressWarnings("unused")
+		String media = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
+		Item item = new Item(name, file.getOriginalFilename(), category);
 		itemRepository.save(item);
 
 		URI uri = uriBuilder.path("/items/{id}").buildAndExpand(item.getId()).toUri();

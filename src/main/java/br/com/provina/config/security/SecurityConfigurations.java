@@ -19,7 +19,7 @@ import br.com.provina.repository.UserRepository;
 
 @EnableWebSecurity
 @Configuration
-@Profile("prod")
+@Profile(value = { "prod", "test" })
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -47,11 +47,11 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests().antMatchers(HttpMethod.GET, "/items").permitAll()
-				.antMatchers(HttpMethod.GET, "/items/*").permitAll().antMatchers(HttpMethod.POST, "/auth").permitAll()
-				.antMatchers(HttpMethod.GET, "/actuator/**").permitAll().anyRequest().authenticated().and().csrf()
-				.disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-				.addFilterBefore(new TokenFilterAuthentication(tokenService),
-						UsernamePasswordAuthenticationFilter.class);
+				.antMatchers(HttpMethod.GET, "/items/*").permitAll().antMatchers("/auth").permitAll()
+				.antMatchers("/auth/**").permitAll().antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+				.anyRequest().authenticated().and().csrf().disable().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().addFilterBefore(
+						new TokenFilterAuthentication(tokenService), UsernamePasswordAuthenticationFilter.class);
 
 	}
 
