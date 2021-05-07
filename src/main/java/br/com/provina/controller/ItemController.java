@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,8 +36,10 @@ import br.com.provina.controller.dto.ItemDto;
 import br.com.provina.controller.form.ItemFormUpdate;
 import br.com.provina.model.Category;
 import br.com.provina.model.Item;
+import br.com.provina.model.User;
 import br.com.provina.repository.CategoryRepository;
 import br.com.provina.repository.ItemRepository;
+import br.com.provina.repository.UserRepository;
 
 @RestController
 @RequestMapping("/items")
@@ -51,6 +54,32 @@ public class ItemController {
 	@Autowired
 	private CloudinaryService cloudinaryService;
 
+	@Autowired
+	private UserRepository userRepository;
+
+	@PostMapping
+	@Transactional
+	@CacheEvict(value = "itemsList", allEntries = true)
+	public ResponseEntity<ItemDto> register(Authentication authentication, @RequestParam("name") String name,
+			@RequestParam("nameCategory") String nameCategory, @RequestParam("file") MultipartFile file,
+			UriComponentsBuilder uriBuilder) throws IOException {
+
+		User authenticatedUser = (User) authentication.getPrincipal();
+		User user = userRepository.getOne(authenticatedUser.getId());
+		Category category = categoryRepository.findByName(nameCategory);
+
+		Map uploadResult = cloudinaryService.upload(file, "images");
+
+		@SuppressWarnings("unused")
+		String media = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
+		Item item = new Item(name, file.getOriginalFilename(), category, user);
+		itemRepository.save(item);
+
+		URI uri = uriBuilder.path("/items/{id}").buildAndExpand(item.getId()).toUri();
+		return ResponseEntity.created(uri).body(new ItemDto(item));
+
+	}
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping
 	@Cacheable(value = "itemsList")
@@ -64,26 +93,6 @@ public class ItemController {
 			Page<Item> items = itemRepository.findByCategoryName(categoryName, pagination);
 			return ItemDto.convert(items);
 		}
-
-	}
-
-	@PostMapping
-	@Transactional
-	@CacheEvict(value = "itemsList", allEntries = true)
-	public ResponseEntity<ItemDto> register(@RequestParam("name") String name,
-			@RequestParam("nameCategory") String nameCategory, @RequestParam("file") MultipartFile file,
-			UriComponentsBuilder uriBuilder) throws IOException {
-		Category category = categoryRepository.findByName(nameCategory);
-
-		Map uploadResult = cloudinaryService.upload(file, "images");
-
-		@SuppressWarnings("unused")
-		String media = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
-		Item item = new Item(name, file.getOriginalFilename(), category);
-		itemRepository.save(item);
-
-		URI uri = uriBuilder.path("/items/{id}").buildAndExpand(item.getId()).toUri();
-		return ResponseEntity.created(uri).body(new ItemDto(item));
 
 	}
 

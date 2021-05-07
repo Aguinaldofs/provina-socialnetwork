@@ -19,7 +19,7 @@ public class TokenFilterAuthentication extends OncePerRequestFilter {
 	private TokenService tokenService;
 	private UserRepository userRepository;
 
-	public TokenFilterAuthentication(TokenService tokenService) {
+	public TokenFilterAuthentication(TokenService tokenService, UserRepository userRepository) {
 		this.tokenService = tokenService;
 		this.userRepository = userRepository;
 	}

@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 
 import br.com.provina.model.Category;
 import br.com.provina.model.Item;
+import br.com.provina.model.User;
 import br.com.provina.repository.CategoryRepository;
 
 public class ItemForm {
@@ -46,7 +47,7 @@ public class ItemForm {
 	public Item convert(CategoryRepository categoryRepository) {
 
 		Category category = categoryRepository.findByName(nameCategory);
-		return new Item(name, url, category);
+		return new Item(name, url, category, new User());
 	}
 
 }

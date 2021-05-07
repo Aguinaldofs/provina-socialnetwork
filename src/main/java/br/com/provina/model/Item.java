@@ -38,7 +38,8 @@ public class Item {
 	public Item() {
 	}
 
-	public Item(String name, String url, Category category) {
+	public Item(String name, String url, Category category, User user) {
+		this.owner = user;
 		this.name = name;
 		this.url = url;
 		this.category = category;

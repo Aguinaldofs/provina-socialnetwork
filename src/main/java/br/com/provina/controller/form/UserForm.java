@@ -3,6 +3,8 @@ package br.com.provina.controller.form;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import br.com.provina.model.User;
 
 public class UserForm {
@@ -31,7 +33,8 @@ public class UserForm {
 	}
 
 	public User convert() {
-		return new User(name, email, password);
+		String encryptedPassword = new BCryptPasswordEncoder().encode(password);
+		return new User(name, email, encryptedPassword);
 	}
 
 }

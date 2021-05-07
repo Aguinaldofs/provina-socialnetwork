@@ -3,7 +3,6 @@ package br.com.provina.config.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,7 +18,6 @@ import br.com.provina.repository.UserRepository;
 
 @EnableWebSecurity
 @Configuration
-@Profile(value = { "prod", "test" })
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -46,18 +44,18 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests().antMatchers(HttpMethod.GET, "/items").permitAll()
-				.antMatchers(HttpMethod.GET, "/items/*").permitAll().antMatchers("/auth").permitAll()
-				.antMatchers("/auth/**").permitAll().antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
-				.anyRequest().authenticated().and().csrf().disable().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().addFilterBefore(
-						new TokenFilterAuthentication(tokenService), UsernamePasswordAuthenticationFilter.class);
+		http.authorizeRequests().antMatchers(HttpMethod.POST, "/user").permitAll().antMatchers("/auth").permitAll()
+				.antMatchers("/auth/**").permitAll().anyRequest().authenticated().and().csrf().disable()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.addFilterBefore(new TokenFilterAuthentication(tokenService, userRepository),
+						UsernamePasswordAuthenticationFilter.class);
 
 	}
 
 	// Static resources configurations(css, js, images, etc)
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-
+		web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**",
+				"/swagger-resources/**");
 	}
 }
