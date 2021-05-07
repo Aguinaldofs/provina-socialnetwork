@@ -68,6 +68,7 @@ public class ItemController {
 		User user = userRepository.getOne(authenticatedUser.getId());
 		Category category = categoryRepository.findByName(nameCategory);
 
+		@SuppressWarnings("rawtypes")
 		Map uploadResult = cloudinaryService.upload(file, "images");
 
 		@SuppressWarnings("unused")
