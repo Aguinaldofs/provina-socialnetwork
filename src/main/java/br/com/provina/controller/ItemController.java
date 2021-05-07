@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -22,8 +21,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +30,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.provina.config.cloudinary.CloudinaryService;
 import br.com.provina.controller.dto.ItemDetailDto;
 import br.com.provina.controller.dto.ItemDto;
-import br.com.provina.controller.form.ItemFormUpdate;
 import br.com.provina.model.Category;
 import br.com.provina.model.Comment;
 import br.com.provina.model.Item;
@@ -47,25 +43,30 @@ import br.com.provina.repository.UserRepository;
 @RequestMapping("/items")
 public class ItemController {
 
-	@Autowired
 	private ItemRepository itemRepository;
 
-	@Autowired
 	private CategoryRepository categoryRepository;
 
-	@Autowired
 	private CloudinaryService cloudinaryService;
 
-	@Autowired
 	private UserRepository userRepository;
 
-	@Autowired
 	private CommentRepository commentRepository;
+
+	@Autowired
+	public ItemController(ItemRepository itemRepository, CategoryRepository categoryRepository,
+			CloudinaryService cloudinaryService, UserRepository userRepository, CommentRepository commentRepository) {
+		this.itemRepository = itemRepository;
+		this.categoryRepository = categoryRepository;
+		this.cloudinaryService = cloudinaryService;
+		this.userRepository = userRepository;
+		this.commentRepository = commentRepository;
+	}
 
 	@PostMapping
 	@Transactional
 	@CacheEvict(value = "itemsList", allEntries = true)
-	public ResponseEntity<ItemDto> register(Authentication authentication, @RequestParam("name") String name,
+	public ResponseEntity<ItemDto> addItem(Authentication authentication, @RequestParam("name") String name,
 			@RequestParam("nameCategory") String nameCategory, @RequestParam("file") MultipartFile file,
 			UriComponentsBuilder uriBuilder) throws IOException {
 
@@ -88,7 +89,7 @@ public class ItemController {
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping
 	@Cacheable(value = "itemsList")
-	public Page<ItemDto> list(@RequestParam(required = false) String categoryName,
+	public Page<ItemDto> listItem(@RequestParam(required = false) String categoryName,
 			@PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable pagination) {
 
 		if (categoryName == null) {
@@ -102,7 +103,7 @@ public class ItemController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ItemDetailDto> detail(@PathVariable Long id) {
+	public ResponseEntity<ItemDetailDto> detailItem(@PathVariable Long id) {
 
 		Optional<Item> optional = itemRepository.findById(id);
 		if (optional.isPresent()) {
@@ -112,22 +113,9 @@ public class ItemController {
 
 	}
 
-	@PutMapping("/{id}")
-	@Transactional
-	public ResponseEntity<ItemDto> update(@PathVariable Long id, @RequestBody @Valid ItemFormUpdate form) {
-
-		Optional<Item> optional = itemRepository.findById(id);
-		if (optional.isPresent()) {
-			Item item = form.update(id, itemRepository);
-			return ResponseEntity.ok(new ItemDto(item));
-		}
-		return ResponseEntity.notFound().build();
-
-	}
-
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<?> delete(@PathVariable Long id) {
+	public ResponseEntity<?> deleteItem(@PathVariable Long id) {
 
 		Optional<Item> optional = itemRepository.findById(id);
 		if (optional.isPresent()) {
@@ -152,13 +140,24 @@ public class ItemController {
 
 		String media = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
 
-		Optional<Item> item = itemRepository.findById(id);
-		if (item.isPresent()) {
-			Comment comment = new Comment(text, file.getOriginalFilename(), item.get(), user);
+		Optional<Item> optional = itemRepository.findById(id);
+		if (optional.isPresent()) {
+			Comment comment = new Comment(text, file.getOriginalFilename(), optional.get(), user);
 			commentRepository.save(comment);
 			return ResponseEntity.created(null).build();
 		}
 
+		return ResponseEntity.notFound().build();
+
+	}
+
+	@DeleteMapping
+	public ResponseEntity<?> deleteComment(Authentication authentication, @PathVariable("id") Long id) {
+		Optional<Comment> optional = commentRepository.findById(id);
+		if (optional.isPresent()) {
+			commentRepository.deleteById(id);
+			return ResponseEntity.ok().build();
+		}
 		return ResponseEntity.notFound().build();
 
 	}
