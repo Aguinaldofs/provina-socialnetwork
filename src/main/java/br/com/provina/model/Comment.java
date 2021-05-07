@@ -21,6 +21,17 @@ public class Comment {
 	@ManyToOne
 	private User user;
 
+	public Comment() {
+
+	}
+
+	public Comment(String text, Item item, User user) {
+		super();
+		this.text = text;
+		this.item = item;
+		this.user = user;
+	}
+
 	public Item getItem() {
 		return item;
 	}

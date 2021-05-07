@@ -33,11 +33,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.provina.config.cloudinary.CloudinaryService;
 import br.com.provina.controller.dto.ItemDetailDto;
 import br.com.provina.controller.dto.ItemDto;
+import br.com.provina.controller.form.CommentForm;
 import br.com.provina.controller.form.ItemFormUpdate;
 import br.com.provina.model.Category;
+import br.com.provina.model.Comment;
 import br.com.provina.model.Item;
 import br.com.provina.model.User;
 import br.com.provina.repository.CategoryRepository;
+import br.com.provina.repository.CommentRepository;
 import br.com.provina.repository.ItemRepository;
 import br.com.provina.repository.UserRepository;
 
@@ -56,6 +59,9 @@ public class ItemController {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private CommentRepository commentRepository;
 
 	@PostMapping
 	@Transactional
@@ -129,6 +135,24 @@ public class ItemController {
 		if (optional.isPresent()) {
 			itemRepository.deleteById(id);
 			return ResponseEntity.ok().build();
+		}
+
+		return ResponseEntity.notFound().build();
+
+	}
+
+	@PostMapping("/{id}/comments")
+	@Transactional
+	public ResponseEntity<?> addComment(Authentication authentication, @RequestBody @Valid CommentForm form,
+			@PathVariable("id") Long id) {
+
+		User authenticatedUser = (User) authentication.getPrincipal();
+		User user = userRepository.getOne(authenticatedUser.getId());
+		Optional<Item> item = itemRepository.findById(id);
+		if (item.isPresent()) {
+			Comment comment = form.convert(user, item.get());
+			commentRepository.save(comment);
+			return ResponseEntity.created(null).build();
 		}
 
 		return ResponseEntity.notFound().build();

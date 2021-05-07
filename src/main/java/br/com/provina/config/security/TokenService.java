@@ -17,7 +17,7 @@ public class TokenService {
 	@Value("${provina.jwt.expiration}")
 	private String expiration;
 
-	@Value("$provina.jwt.secret")
+	@Value("${provina.jwt.secret}")
 	private String secret;
 
 	public String generateToken(Authentication authentication) {
