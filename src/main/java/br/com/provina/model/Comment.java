@@ -15,6 +15,7 @@ public class Comment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String text;
+	private String media;
 	private LocalDateTime creationdate = LocalDateTime.now();
 	@ManyToOne
 	private Item item;
@@ -25,11 +26,12 @@ public class Comment {
 
 	}
 
-	public Comment(String text, Item item, User user) {
+	public Comment(String text, String media, Item item, User user) {
 		super();
 		this.text = text;
 		this.item = item;
 		this.user = user;
+		this.setMedia(media);
 	}
 
 	public Item getItem() {
@@ -70,5 +72,13 @@ public class Comment {
 
 	public void setId(int itemId) {
 		this.id = itemId;
+	}
+
+	public String getMedia() {
+		return media;
+	}
+
+	public void setMedia(String media) {
+		this.media = media;
 	}
 }

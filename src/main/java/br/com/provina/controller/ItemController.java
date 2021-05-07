@@ -33,7 +33,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.provina.config.cloudinary.CloudinaryService;
 import br.com.provina.controller.dto.ItemDetailDto;
 import br.com.provina.controller.dto.ItemDto;
-import br.com.provina.controller.form.CommentForm;
 import br.com.provina.controller.form.ItemFormUpdate;
 import br.com.provina.model.Category;
 import br.com.provina.model.Comment;
@@ -77,7 +76,6 @@ public class ItemController {
 		@SuppressWarnings("rawtypes")
 		Map uploadResult = cloudinaryService.upload(file, "images");
 
-		@SuppressWarnings("unused")
 		String media = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
 		Item item = new Item(name, file.getOriginalFilename(), category, user);
 		itemRepository.save(item);
@@ -143,14 +141,20 @@ public class ItemController {
 
 	@PostMapping("/{id}/comments")
 	@Transactional
-	public ResponseEntity<?> addComment(Authentication authentication, @RequestBody @Valid CommentForm form,
-			@PathVariable("id") Long id) {
+	public ResponseEntity<?> addComment(Authentication authentication, @RequestParam("text") String text,
+			@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) throws IOException {
 
 		User authenticatedUser = (User) authentication.getPrincipal();
 		User user = userRepository.getOne(authenticatedUser.getId());
+
+		@SuppressWarnings("rawtypes")
+		Map uploadResult = cloudinaryService.upload(file, "images");
+
+		String media = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
+
 		Optional<Item> item = itemRepository.findById(id);
 		if (item.isPresent()) {
-			Comment comment = form.convert(user, item.get());
+			Comment comment = new Comment(text, file.getOriginalFilename(), item.get(), user);
 			commentRepository.save(comment);
 			return ResponseEntity.created(null).build();
 		}
