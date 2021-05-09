@@ -23,6 +23,7 @@ public class ItemDto {
 		this.url = item.getUrl();
 		this.totalUpvotes = item.getUpvotes().size();
 		this.totalComments = item.getComments().size();
+		this.owner = new UserDto(item.getOwner());
 	}
 
 	public String getName() {

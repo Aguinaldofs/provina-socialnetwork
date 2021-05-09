@@ -16,8 +16,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ValidationErrorHandler {
 
-	@Autowired
 	private MessageSource messageSource;
+
+	@Autowired
+	public ValidationErrorHandler(MessageSource messageSource) {
+		this.messageSource = messageSource;
+	}
 
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)

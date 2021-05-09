@@ -108,6 +108,30 @@ public class User implements UserDetails {
 		return this.email;
 	}
 
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
+	public List<Upvote> getUpvotes() {
+		return upvotes;
+	}
+
+	public void setUpvotes(List<Upvote> upvotes) {
+		this.upvotes = upvotes;
+	}
+
+	public List<Profile> getProfiles() {
+		return profiles;
+	}
+
+	public void setProfiles(List<Profile> profiles) {
+		this.profiles = profiles;
+	}
+
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;

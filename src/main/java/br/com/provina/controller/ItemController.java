@@ -2,6 +2,7 @@ package br.com.provina.controller;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -28,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.provina.config.cloudinary.CloudinaryService;
+import br.com.provina.controller.dto.CommentDto;
 import br.com.provina.controller.dto.ItemDetailDto;
 import br.com.provina.controller.dto.ItemDto;
 import br.com.provina.model.Category;
@@ -74,10 +76,11 @@ public class ItemController {
 		User user = userRepository.getOne(authenticatedUser.getId());
 		Category category = categoryRepository.findByName(nameCategory);
 
-		@SuppressWarnings("rawtypes")
-		Map uploadResult = cloudinaryService.upload(file, "images");
+		if (file != null) {
+			Map uploadResult = cloudinaryService.upload(file, "images");
+			String media = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
+		}
 
-		String media = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
 		Item item = new Item(name, file.getOriginalFilename(), category, user);
 		itemRepository.save(item);
 
@@ -86,7 +89,7 @@ public class ItemController {
 
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping
 	@Cacheable(value = "itemsList")
 	public Page<ItemDto> listItem(@RequestParam(required = false) String categoryName,
@@ -151,7 +154,21 @@ public class ItemController {
 
 	}
 
-	@DeleteMapping
+	@GetMapping("/{id}/comments")
+	public ResponseEntity<?> listComment(@PathVariable Long id) {
+
+		Optional<Item> optional = itemRepository.findById(id);
+		Optional<Comment> comment = commentRepository.findById(id);
+		if (optional.isPresent()) {
+			List<Comment> comments = optional.get().getComments();
+			List<CommentDto> commentsDto = CommentDto.convert(comments);
+			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.notFound().build();
+	}
+
+	@DeleteMapping("/{id}/comments/{id}")
+	@Transactional
 	public ResponseEntity<?> deleteComment(Authentication authentication, @PathVariable("id") Long id) {
 		Optional<Comment> optional = commentRepository.findById(id);
 		if (optional.isPresent()) {

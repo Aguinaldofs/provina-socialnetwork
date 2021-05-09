@@ -40,6 +40,7 @@ public class Item {
 
 	public Item(String name, String url, Category category, User user) {
 		this.owner = user;
+		System.out.println(user);
 		this.name = name;
 		this.url = url;
 		this.category = category;

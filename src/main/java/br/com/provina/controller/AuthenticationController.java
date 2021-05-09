@@ -21,11 +21,14 @@ import br.com.provina.controller.form.LoginForm;
 @RequestMapping("/auth")
 public class AuthenticationController {
 
-	@Autowired
 	private AuthenticationManager authManager;
+	private TokenService tokenService;
 
 	@Autowired
-	private TokenService tokenService;
+	public AuthenticationController(AuthenticationManager authManager, TokenService tokenService) {
+		this.authManager = authManager;
+		this.tokenService = tokenService;
+	}
 
 	@PostMapping("/login")
 	public ResponseEntity<TokenDto> authenticate(@RequestBody @Valid LoginForm form) {

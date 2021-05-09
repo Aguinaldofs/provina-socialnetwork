@@ -20,12 +20,17 @@ import br.com.provina.repository.UserRepository;
 @Configuration
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
-	@Autowired
 	private AuthenticationService authenticationService;
-	@Autowired
 	private UserRepository userRepository;
-	@Autowired
 	private TokenService tokenService;
+
+	@Autowired
+	public SecurityConfigurations(AuthenticationService authenticationService, UserRepository userRepository,
+			TokenService tokenService) {
+		this.authenticationService = authenticationService;
+		this.userRepository = userRepository;
+		this.tokenService = tokenService;
+	}
 
 	@Override
 	@Bean

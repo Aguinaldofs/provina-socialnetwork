@@ -13,7 +13,7 @@ public class Comment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	private String text;
 	private String media;
 	private LocalDateTime creationdate = LocalDateTime.now();
@@ -66,11 +66,11 @@ public class Comment {
 		this.text = text;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int itemId) {
+	public void setId(Long itemId) {
 		this.id = itemId;
 	}
 
