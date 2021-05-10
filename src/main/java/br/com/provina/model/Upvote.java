@@ -26,9 +26,10 @@ public class Upvote {
 	public Upvote() {
 	}
 
-	public Upvote(User user, Item item) {
+	public Upvote(User user, Item item, VotingStatus status) {
 		this.user = user;
 		this.item = item;
+		this.status = status;
 	}
 
 	public long getId() {

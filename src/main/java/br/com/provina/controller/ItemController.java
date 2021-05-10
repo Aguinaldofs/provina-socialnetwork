@@ -35,10 +35,13 @@ import br.com.provina.controller.dto.ItemDto;
 import br.com.provina.model.Category;
 import br.com.provina.model.Comment;
 import br.com.provina.model.Item;
+import br.com.provina.model.Upvote;
 import br.com.provina.model.User;
+import br.com.provina.model.VotingStatus;
 import br.com.provina.repository.CategoryRepository;
 import br.com.provina.repository.CommentRepository;
 import br.com.provina.repository.ItemRepository;
+import br.com.provina.repository.UpvoteRepository;
 import br.com.provina.repository.UserRepository;
 
 @RestController
@@ -55,14 +58,19 @@ public class ItemController {
 
 	private CommentRepository commentRepository;
 
+	private UpvoteRepository upvoteRepository;
+
 	@Autowired
 	public ItemController(ItemRepository itemRepository, CategoryRepository categoryRepository,
-			CloudinaryService cloudinaryService, UserRepository userRepository, CommentRepository commentRepository) {
+			CloudinaryService cloudinaryService, UserRepository userRepository, CommentRepository commentRepository,
+			UpvoteRepository upvoteRepository) {
 		this.itemRepository = itemRepository;
 		this.categoryRepository = categoryRepository;
 		this.cloudinaryService = cloudinaryService;
 		this.userRepository = userRepository;
 		this.commentRepository = commentRepository;
+		this.upvoteRepository = upvoteRepository;
+
 	}
 
 	@PostMapping
@@ -174,6 +182,31 @@ public class ItemController {
 		if (optional.isPresent()) {
 			commentRepository.deleteById(id);
 			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.notFound().build();
+
+	}
+
+	@PostMapping("/{id}/upvotes")
+	@Transactional
+	public ResponseEntity<?> addUpvotes(Authentication authentication, @PathVariable("id") Long id,
+			@RequestParam("status") VotingStatus status) {
+
+		User authenticatedUser = (User) authentication.getPrincipal();
+		User user = userRepository.getOne(authenticatedUser.getId());
+
+		Optional<Item> optionalItem = itemRepository.findById(id);
+		if (optionalItem.isPresent()) {
+			Optional<Upvote> upvoteExists = upvoteRepository.findByUserAndItem(user, optionalItem.get());
+			if (upvoteExists.isPresent()) {
+				return ResponseEntity.status(403).build();
+			}
+
+			Upvote upvote = new Upvote(authenticatedUser, optionalItem.get(), status);
+			upvoteRepository.save(upvote);
+
+			return ResponseEntity.created(null).build();
+
 		}
 		return ResponseEntity.notFound().build();
 
