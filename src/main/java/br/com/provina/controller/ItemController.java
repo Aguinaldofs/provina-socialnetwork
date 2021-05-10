@@ -128,8 +128,8 @@ public class ItemController {
 	@Transactional
 	public ResponseEntity<?> deleteItem(@PathVariable Long id) {
 
-		Optional<Item> optional = itemRepository.findById(id);
-		if (optional.isPresent()) {
+		Optional<Item> optionalItem = itemRepository.findById(id);
+		if (optionalItem.isPresent()) {
 			itemRepository.deleteById(id);
 			return ResponseEntity.ok().build();
 		}
