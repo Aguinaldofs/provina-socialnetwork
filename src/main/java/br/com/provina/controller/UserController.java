@@ -23,7 +23,6 @@ import br.com.provina.controller.dto.UserDetailDto;
 import br.com.provina.controller.dto.UserDto;
 import br.com.provina.controller.form.UserForm;
 import br.com.provina.model.User;
-import br.com.provina.repository.ItemRepository;
 import br.com.provina.repository.UserRepository;
 
 @RestController
@@ -31,12 +30,10 @@ import br.com.provina.repository.UserRepository;
 public class UserController {
 
 	private UserRepository userRepository;
-	private ItemRepository itemRepository;
 
 	@Autowired
 	public UserController(UserRepository userRepository) {
 		this.userRepository = userRepository;
-		this.itemRepository = itemRepository;
 	}
 
 	@PostMapping

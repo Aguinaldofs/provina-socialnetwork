@@ -73,6 +73,7 @@ public class ItemController {
 
 	}
 
+	@SuppressWarnings("rawtypes")
 	@PostMapping
 	@Transactional
 	@CacheEvict(value = "itemsList", allEntries = true)
@@ -84,12 +85,13 @@ public class ItemController {
 		User user = userRepository.getOne(authenticatedUser.getId());
 		Category category = categoryRepository.findByName(nameCategory);
 
+		String url = "provina/images/dzeeezpus1wwdsufkq1w.jpg";
 		if (file != null) {
 			Map uploadResult = cloudinaryService.upload(file, "images");
-			String media = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
+			url = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
 		}
 
-		Item item = new Item(name, file.getOriginalFilename(), category, user);
+		Item item = new Item(name, url, category, user);
 		itemRepository.save(item);
 
 		URI uri = uriBuilder.path("/items/{id}").buildAndExpand(item.getId()).toUri();
