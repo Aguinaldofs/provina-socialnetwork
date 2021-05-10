@@ -63,11 +63,11 @@ public class UserController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<UserDetailDto> detail(@PathVariable Long id) {
+	public ResponseEntity<UserDetailDto> detailUser(@PathVariable Long id) {
 
-		Optional<User> optional = userRepository.findById(id);
-		if (optional.isPresent()) {
-			return ResponseEntity.ok(new UserDetailDto(optional.get()));
+		Optional<User> optionalUser = userRepository.findById(id);
+		if (optionalUser.isPresent()) {
+			return ResponseEntity.ok(new UserDetailDto(optionalUser.get()));
 		}
 		return ResponseEntity.notFound().build();
 	}
