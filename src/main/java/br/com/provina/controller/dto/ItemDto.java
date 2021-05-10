@@ -1,6 +1,8 @@
 package br.com.provina.controller.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 
@@ -57,6 +59,10 @@ public class ItemDto {
 
 	public UserDto getOwner() {
 		return owner;
+	}
+
+	public static List<ItemDto> convertList(List<Item> item) {
+		return item.stream().map(ItemDto::new).collect(Collectors.toList());
 	}
 
 }

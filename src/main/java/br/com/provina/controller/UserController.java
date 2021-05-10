@@ -1,16 +1,13 @@
 package br.com.provina.controller;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +22,8 @@ import br.com.provina.controller.dto.ItemDto;
 import br.com.provina.controller.dto.UserDetailDto;
 import br.com.provina.controller.dto.UserDto;
 import br.com.provina.controller.form.UserForm;
-import br.com.provina.model.Item;
 import br.com.provina.model.User;
+import br.com.provina.repository.ItemRepository;
 import br.com.provina.repository.UserRepository;
 
 @RestController
@@ -34,15 +31,17 @@ import br.com.provina.repository.UserRepository;
 public class UserController {
 
 	private UserRepository userRepository;
+	private ItemRepository itemRepository;
 
 	@Autowired
 	public UserController(UserRepository userRepository) {
 		this.userRepository = userRepository;
+		this.itemRepository = itemRepository;
 	}
 
 	@PostMapping
 	@Transactional
-	public ResponseEntity<UserDto> register(@RequestBody @Valid UserForm form, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<UserDto> addUser(@RequestBody @Valid UserForm form, UriComponentsBuilder uriBuilder) {
 		User user = form.convert();
 		userRepository.save(user);
 
@@ -52,15 +51,15 @@ public class UserController {
 	}
 
 	@GetMapping("/{id}/items")
-	public ResponseEntity<Page<ItemDto>> itemlist(@PathVariable Long id,
-			@PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable pagination) {
+	public ResponseEntity<List<ItemDto>> listUserItems(@PathVariable("id") Long id) {
 		Optional<User> user = userRepository.findById(id);
-
 		if (user.isPresent()) {
-			Page<ItemDto> item = ItemDto.convert((Page<Item>) user.get().getItem());
-			return ResponseEntity.status(200).body(item);
+			List<ItemDto> items = ItemDto.convertList(user.get().getItem());
+			return ResponseEntity.ok().body(items);
 		}
-		return ResponseEntity.status(404).build();
+
+		return ResponseEntity.notFound().build();
+
 	}
 
 	@GetMapping("/{id}")
