@@ -74,10 +74,10 @@ public class UserController {
 
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<?> delete(@PathVariable Long id) {
+	public ResponseEntity<?> deleteUser(@PathVariable Long id) {
 
-		Optional<User> optional = userRepository.findById(id);
-		if (optional.isPresent()) {
+		Optional<User> optionalUser = userRepository.findById(id);
+		if (optionalUser.isPresent()) {
 			userRepository.deleteById(id);
 			return ResponseEntity.ok().build();
 		}
