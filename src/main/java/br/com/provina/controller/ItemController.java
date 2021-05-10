@@ -165,12 +165,12 @@ public class ItemController {
 	@GetMapping("/{id}/comments")
 	public ResponseEntity<?> listComment(@PathVariable Long id) {
 
-		Optional<Item> optional = itemRepository.findById(id);
-		Optional<Comment> comment = commentRepository.findById(id);
-		if (optional.isPresent()) {
-			List<Comment> comments = optional.get().getComments();
+		Optional<Item> optionalItem = itemRepository.findById(id);
+		Optional<Comment> optionalComment = commentRepository.findById(id);
+		if (optionalItem.isPresent() && optionalComment.isPresent()) {
+			List<Comment> comments = optionalItem.get().getComments();
 			List<CommentDto> commentsDto = CommentDto.convert(comments);
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok().body(commentsDto);
 		}
 		return ResponseEntity.notFound().build();
 	}
