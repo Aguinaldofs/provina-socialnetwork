@@ -116,9 +116,9 @@ public class ItemController {
 	@GetMapping("/{id}")
 	public ResponseEntity<ItemDetailDto> detailItem(@PathVariable Long id) {
 
-		Optional<Item> optional = itemRepository.findById(id);
-		if (optional.isPresent()) {
-			return ResponseEntity.ok(new ItemDetailDto(optional.get()));
+		Optional<Item> optionalItem = itemRepository.findById(id);
+		if (optionalItem.isPresent()) {
+			return ResponseEntity.ok(new ItemDetailDto(optionalItem.get()));
 		}
 		return ResponseEntity.notFound().build();
 
