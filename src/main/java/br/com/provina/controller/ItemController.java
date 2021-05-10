@@ -179,8 +179,8 @@ public class ItemController {
 	@Transactional
 	public ResponseEntity<?> deleteComment(Authentication authentication, @PathVariable("id") Long id) {
 
-		Optional<Comment> optional = commentRepository.findById(id);
-		if (optional.isPresent()) {
+		Optional<Comment> optionalComment = commentRepository.findById(id);
+		if (optionalComment.isPresent()) {
 			commentRepository.deleteById(id);
 			return ResponseEntity.ok().build();
 		}
