@@ -178,6 +178,7 @@ public class ItemController {
 	@DeleteMapping("/{id}/comments/{id}")
 	@Transactional
 	public ResponseEntity<?> deleteComment(Authentication authentication, @PathVariable("id") Long id) {
+
 		Optional<Comment> optional = commentRepository.findById(id);
 		if (optional.isPresent()) {
 			commentRepository.deleteById(id);
@@ -206,6 +207,20 @@ public class ItemController {
 			upvoteRepository.save(upvote);
 
 			return ResponseEntity.created(null).build();
+
+		}
+		return ResponseEntity.notFound().build();
+
+	}
+
+	@DeleteMapping("/{id}/upvotes")
+	@Transactional
+	public ResponseEntity<?> deleteUpvotes(Authentication authentication, @PathVariable("id") Long id) {
+		Optional<Item> optionalItem = itemRepository.findById(id);
+		Optional<Upvote> optionalUpvote = upvoteRepository.findById(id);
+		if (optionalItem.isPresent() && optionalUpvote.isPresent()) {
+			upvoteRepository.deleteById(optionalUpvote.get().getId());
+			return ResponseEntity.ok().build();
 
 		}
 		return ResponseEntity.notFound().build();
