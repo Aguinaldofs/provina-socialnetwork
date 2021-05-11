@@ -55,8 +55,10 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.cors().and().authorizeRequests().antMatchers(HttpMethod.POST, "/user").permitAll().antMatchers("/auth")
-				.permitAll().antMatchers("/h2-console/**").permitAll().antMatchers("/auth/**").permitAll().anyRequest()
-				.authenticated().and().csrf().ignoringAntMatchers("/h2-console/**").disable().sessionManagement()
+				.permitAll().antMatchers("/serviceName").permitAll().antMatchers(HttpMethod.GET, "/actuator/**")
+				.permitAll().antMatchers("/").permitAll().antMatchers("/h2-console/**").permitAll()
+				.antMatchers("/auth/**").permitAll().anyRequest().authenticated().and().csrf()
+				.ignoringAntMatchers("/h2-console/**").disable().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(new TokenFilterAuthentication(tokenService, userRepository),
 						UsernamePasswordAuthenticationFilter.class);
