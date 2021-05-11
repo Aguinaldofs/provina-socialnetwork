@@ -11,4 +11,4 @@ INSERT INTO ITEM(name, url, creationdate, category_id) VALUES('Prova Algoritmos 
 
 INSERT INTO COMMENT(text, user_id, item_id) VALUES('Prova muito boa', '1', '2'); 
 
-INSERT INTO UPVOTE(status, user_id, item_id) VALUES('UPVOTE', '1','2');
+INSERT INTO UPVOTE(status, user_id, item_id) VALUES('UPVOTE', '1','1');
