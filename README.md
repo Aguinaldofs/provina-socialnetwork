@@ -5,7 +5,7 @@ Setup
 -----
 - Clone and open in Eclipse IDE
 - Install maven dependencies using IDE auto import or using the command ``mvn install``
-- Browse ``http://localhost:8080/swagger-ui.html#/``
+- Browse ``http://localhost:8080``
     
 API Doc & Sample
 ----------------
