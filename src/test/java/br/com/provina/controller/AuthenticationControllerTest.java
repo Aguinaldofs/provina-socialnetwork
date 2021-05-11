@@ -24,7 +24,7 @@ class AuthenticationControllerTest {
 	private MockMvc mockMvc;
 
 	@Test
-	public void deveriaDevolver400CasoDadosDeAutenticacaoEstejamIncorretos() throws Exception {
+	public void ShouldReturnCreatedUser() throws Exception {
 		URI uri = new URI("/auth/login");
 		String json = "{\"email\":\"aguinaldojunior@gec.inatel.br\",\"password\":\"123456\"}";
 
