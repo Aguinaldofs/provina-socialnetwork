@@ -1,5 +1,5 @@
 # provina-socialnetwork-api
-Experimental social network to share old exams. Created using Spring Boot REST API using jpa (Springboot REST API wich connects MySQL database).
+Experimental social network to share old exams. Created using Spring Boot REST API using jpa (Springboot REST API wich connects Postgres database).
 
 Setup
 -----
