@@ -13,14 +13,15 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.provina.controller.dto.ItemDto;
-import br.com.provina.controller.dto.UserDetailDto;
 import br.com.provina.controller.dto.UserDto;
+import br.com.provina.controller.form.UpdateUserForm;
 import br.com.provina.controller.form.UserForm;
 import br.com.provina.model.User;
 import br.com.provina.repository.UserRepository;
@@ -60,11 +61,23 @@ public class UserController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<UserDetailDto> detailUser(@PathVariable Long id) {
+	public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
 
 		Optional<User> optionalUser = userRepository.findById(id);
 		if (optionalUser.isPresent()) {
-			return ResponseEntity.ok(new UserDetailDto(optionalUser.get()));
+			return ResponseEntity.ok(new UserDto(optionalUser.get()));
+		}
+		return ResponseEntity.notFound().build();
+	}
+
+	@PutMapping("/{id}")
+	@Transactional
+	public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody @Valid UpdateUserForm form) {
+		Optional<User> optionalUser = userRepository.findById(id);
+		if (optionalUser.isPresent()) {
+
+			User user = form.editUser(id, userRepository);
+			return ResponseEntity.ok(new UserDto(user));
 		}
 		return ResponseEntity.notFound().build();
 	}
