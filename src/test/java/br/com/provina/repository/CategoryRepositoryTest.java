@@ -22,7 +22,7 @@ class CategoryRepositoryTest {
 	}
 
 	@Test
-	void shouldReturnCategoryName() {
+	void ShouldReturnCategoryName() {
 		String categoryName = "Engenharia da Computação";
 		Category category = categoryRepository.findByName(categoryName);
 		Assert.assertEquals(categoryName, category.getName());

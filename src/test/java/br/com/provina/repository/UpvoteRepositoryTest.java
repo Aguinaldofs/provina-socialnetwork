@@ -33,7 +33,7 @@ public class UpvoteRepositoryTest {
 	}
 
 	@Test
-	void test() {
+	void ShouldReturnUpvoteWithUserEmailAndItemCategoryName() {
 		String email = "aguinaldojunior@gec.inatel.br";
 		Optional<User> user = userRepository.findByEmail(email);
 		Pageable pageable = null;

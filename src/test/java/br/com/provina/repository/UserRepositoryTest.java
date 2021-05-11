@@ -19,7 +19,7 @@ class UserRepositoryTest {
 	private UserRepository userRepository;
 
 	@Test
-	void shouldReturnCategoryName() {
+	void shouldReturnEmail() {
 		String email = "aguinaldojunior@gec.inatel.br";
 		Optional<User> user = userRepository.findByEmail(email);
 		Assert.assertEquals(email, user.get().getEmail());

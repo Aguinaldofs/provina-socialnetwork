@@ -23,7 +23,7 @@ public class ItemRepositoryTest {
 	}
 
 	@Test
-	void shouldReturnCategoryName() {
+	void ShouldReturnCategoryName() {
 		Pageable pageable = null;
 		String categoryName = "Engenharia da Computação";
 		Page<Item> item = itemRepository.findByCategoryName(categoryName, pageable);
