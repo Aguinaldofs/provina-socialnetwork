@@ -1,11 +1,59 @@
+<h5 align="center">
+  <p><img alt="ProvinaBanner" title="#Provina" src="src\main\resources\banner\image.png" /></p>
+  <p>Image by <a href= "https://www.instagram.com/agui.nart"/>@Aguinaldofs</a> under the terms of [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).</p>
+</h5>
 <h1 align="center">
-  <img alt="ProvinaBanner" title="#Provina" src="src\main\resources\banner\image.png" />
+    provina-socialnetwork-api 📚
 </h1>
+Experimental social network to share old exams and contents of INATEL! Created using Spring Boot REST API with JPA  
 
-<h1 align="center">
-    provina-socialnetwork-api
-</h1>
-Experimental social network to share old exams. Created using Spring Boot REST API using jpa (Springboot REST API wich connects Postgres database).
+Features
+-----
+
+<table border="0" width="100%" 
+cellpadding="10">
+<tr>
+ 
+<td width="25%" valign="top" border="0">
+  
+## User
+- [x] CREATE
+- [x] UPDATE
+- [x] LIST
+- [x] DELETE
+
+</td>
+<td width="25%" valign="top">
+  
+## Item
+- [x] CREATE
+- [x] LIST
+- [x] DELETE
+
+</td>
+<td width="25%" valign="top">
+  
+## Comment
+- [x] CREATE
+- [x] LIST
+- [x] DELETE
+
+</td>
+
+<td width="25%" valign="top">
+  
+## Upvote
+- [x] CREATE
+- [x] DELETE
+
+</td>
+
+</tr>
+</table>
+
+
+Design Patterns
+-----
 
 Setup
 -----
