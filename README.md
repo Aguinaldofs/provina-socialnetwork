@@ -1,4 +1,10 @@
-# provina-socialnetwork-api
+<h1 align="center">
+  <img alt="ProvinaBanner" title="#Provina" src="src\main\resources\banner\image.png" />
+</h1>
+
+<h1 align="center">
+    provina-socialnetwork-api
+</h1>
 Experimental social network to share old exams. Created using Spring Boot REST API using jpa (Springboot REST API wich connects Postgres database).
 
 Setup
