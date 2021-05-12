@@ -168,7 +168,7 @@ public class ItemController {
 	public ResponseEntity<?> listComment(@PathVariable Long id) {
 
 		Optional<Item> optionalItem = itemRepository.findById(id);
-		Optional<Comment> optionalComment = commentRepository.findById(id);
+		Optional<List<Comment>> optionalComment = Optional.of(commentRepository.findAll());
 		if (optionalItem.isPresent() && optionalComment.isPresent()) {
 			List<Comment> comments = optionalItem.get().getComments();
 			List<CommentDto> commentsDto = CommentDto.convert(comments);
@@ -177,11 +177,12 @@ public class ItemController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@DeleteMapping("/{id}/comments/{id}")
+	@DeleteMapping("/{id}/comments/{idComment}")
 	@Transactional
-	public ResponseEntity<?> deleteComment(Authentication authentication, @PathVariable("id") Long id) {
+	public ResponseEntity<?> deleteComment(Authentication authentication, @PathVariable("id") Long id,
+			@PathVariable("idComment") Long idComment) {
 
-		Optional<Comment> optionalComment = commentRepository.findById(id);
+		Optional<Comment> optionalComment = commentRepository.findById(idComment);
 		if (optionalComment.isPresent()) {
 			commentRepository.deleteById(id);
 			return ResponseEntity.ok().build();
