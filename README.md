@@ -5,7 +5,22 @@
 <h1 align="center">
     provina-socialnetwork-api 📚
 </h1>
-Experimental social network to share old exams and contents of INATEL! Created using Spring Boot REST API with JPA  
+<h3 align="center">Experimental social network to share old exams and contents of INATEL! 
+  </h3>
+
+API Requirements
+-----
+### Must to have
+- [x] Comunicar com uma API externa (desenvolvida pelo colaborador ou por terceiros).
+- [x] Persistir dados num BD relacional (não relacional é "nice to have").
+- [x] Apresentar alguns testes unitários e funcionais.
+
+### Nice to have
+- [ ] Organização do código.
+- [ ] Logging.
+- [x] Segurança (ex: JWT).
+- [x] Cache.
+
 
 Features
 -----
