@@ -49,7 +49,7 @@ Features
   >
   <tr>
 
-  <td width="50%" valign="top" border="0">
+  <td width="33%" valign="top" border="0">
 
   ## User
   - [x] CREATE
@@ -58,7 +58,7 @@ Features
   - [x] DELETE
 
   </td>
-  <td width="50%" valign="top">
+  <td width="33%" valign="top">
 
   ## Item
   - [x] CREATE
@@ -66,7 +66,7 @@ Features
   - [x] DELETE
 
   </td>
-  <td width="50%" valign="top">
+  <td width="33%" valign="top">
 
   ## Comment
   - [x] CREATE
