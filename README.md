@@ -1,11 +1,11 @@
-<h5 align="center">
+<h5 align="left">
   <p><img alt="ProvinaBanner" title="#Provina" src="src\main\resources\banner\image.png" /></p>
   <p>Image by <a href= "https://www.instagram.com/agui.nart"/>@Aguinaldofs</a> under the terms of [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).</p>
 </h5>
-<h1 align="center">
+<h1 align="left">
     provina-socialnetwork-api 📚
 </h1>
-<h3 align="center">Experimental social network to share old exams and contents of INATEL! 
+<h3 align="left">Experimental social network to share old exams and contents of INATEL! 
   </h3>
 
 API Requirements
@@ -21,6 +21,23 @@ API Requirements
 - [x] Segurança (ex: JWT).
 - [x] Cache.
 
+Design Patterns
+-----
+### Model
+Detentor dos dados, recebe as informações do Controller, valida
+ou não e retorna a resposta adequada.
+
+### Controller
+Fornece a comunicação entre o detentor dos dados e o cliente.
+
+### Repository
+Interface de consulta e manipulação dos dados, utilizado para criar uma barreira de controle e segurança entre a aplicação e os dados.
+
+### DTO
+Utilizado para transferir dados entre subsistemas do software.
+
+### Form 
+Utilizado para transferir dados entre subsistemas do software.
 
 Features
 -----
@@ -67,8 +84,7 @@ cellpadding="10">
 </table>
 
 
-Design Patterns
------
+
 
 Setup
 -----
