@@ -5,14 +5,14 @@
   
 </h5>
 <h1 align="center">
-    provina-socialnetwork-api 📚
+    provina-socialnetwork-api
   <p><img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white"/> <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white"/> <img src="https://img.shields.io/badge/Eclipse-2C2255?style=for-the-badge&logo=eclipse&logoColor=white"/></p>
 </h1>
 <h3 align="left">Experimental social network to share old exams and contents of INATEL!  </h3>
 
 
 
-API Requirements
+✍️ API Requirements
 -----
 ### Must to have
 - [x] Comunicar com uma API externa (desenvolvida pelo colaborador ou por terceiros).
@@ -25,7 +25,7 @@ API Requirements
 - [x] Segurança (ex: JWT).
 - [x] Cache.
 
-Design Patterns
+📝 Design Patterns
 -----
   ### Model
   Detentor dos dados, recebe as informações do Controller, valida
@@ -44,7 +44,7 @@ Design Patterns
   Utilizado para transferir dados entre subsistemas do software.
 
 
-Features
+📚 Features
 -----
 
   <table border="0" width="100%"
@@ -91,13 +91,13 @@ Features
 
 
 
-Setup
+💻 Setup
 -----
 - Clone and open in Eclipse IDE
 - Install maven dependencies using IDE auto import or using the command ``mvn install``
 - Browse ``http://localhost:8080``
     
-API Doc & Sample
+📃 API Doc & Sample
 ----------------
 
 ###  Authentication Controller
@@ -173,7 +173,7 @@ API Doc & Sample
    DELETE /user/{id}
    ```
    
-External Tools
+📲 External Tools
 ----------------
 
   #### ElephantSQL
