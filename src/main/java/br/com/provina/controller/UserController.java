@@ -71,7 +71,6 @@ public class UserController {
 	}
 
 	@PutMapping("/{id}")
-	@Transactional
 	public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody @Valid UpdateUserForm form) {
 		Optional<User> optionalUser = userRepository.findById(id);
 		if (optionalUser.isPresent()) {
