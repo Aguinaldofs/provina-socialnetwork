@@ -75,13 +75,13 @@ Features
 
   </td>
 
-<td width="28%" valign="top">
+  <td width="28%" valign="top">
   
-## Upvote
-- [x] CREATE
-- [x] DELETE
+  ## Upvote
+  - [x] CREATE
+  - [x] DELETE
 
-</td>
+  </td>
 
 </tr>
 </table>
