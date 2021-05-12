@@ -78,8 +78,9 @@ public class ItemController {
 	@Transactional
 	@CacheEvict(value = "itemsList", allEntries = true)
 	public ResponseEntity<ItemDto> addItem(Authentication authentication, @RequestParam("name") String name,
-			@RequestParam("nameCategory") String nameCategory, @RequestParam("file") MultipartFile file,
-			UriComponentsBuilder uriBuilder) throws IOException {
+			@RequestParam("nameCategory") String nameCategory,
+			@RequestParam(value = "file", required = false) MultipartFile file, UriComponentsBuilder uriBuilder)
+			throws IOException {
 
 		User authenticatedUser = (User) authentication.getPrincipal();
 		User user = userRepository.getOne(authenticatedUser.getId());
@@ -143,7 +144,8 @@ public class ItemController {
 	@PostMapping("/{id}/comments")
 	@Transactional
 	public ResponseEntity<?> addComment(Authentication authentication, @RequestParam("text") String text,
-			@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) throws IOException {
+			@PathVariable("id") Long id, @RequestParam(value = "file", required = false) MultipartFile file)
+			throws IOException {
 
 		User authenticatedUser = (User) authentication.getPrincipal();
 		User user = userRepository.getOne(authenticatedUser.getId());
@@ -184,7 +186,7 @@ public class ItemController {
 
 		Optional<Comment> optionalComment = commentRepository.findById(idComment);
 		if (optionalComment.isPresent()) {
-			commentRepository.deleteById(id);
+			commentRepository.deleteById(idComment);
 			return ResponseEntity.ok().build();
 		}
 		return ResponseEntity.notFound().build();

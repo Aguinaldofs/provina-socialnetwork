@@ -2,6 +2,7 @@ package br.com.provina.controller.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import br.com.provina.model.Comment;
 
@@ -36,8 +37,7 @@ public class CommentDto {
 	}
 
 	public static List<CommentDto> convert(List<Comment> comments) {
-		// TODO Auto-generated method stub
-		return null;
+		return comments.stream().map(CommentDto::new).collect(Collectors.toList());
 	}
 
 }
