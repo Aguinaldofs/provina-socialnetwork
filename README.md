@@ -25,56 +25,57 @@ API Requirements
 
 Design Patterns
 -----
-### Model
-Detentor dos dados, recebe as informações do Controller, valida
-ou não e retorna a resposta adequada.
+  ### Model
+  Detentor dos dados, recebe as informações do Controller, valida
+  ou não e retorna a resposta adequada.
 
-### Controller
-Fornece a comunicação entre o detentor dos dados e o cliente.
+  ### Controller
+  Fornece a comunicação entre o detentor dos dados e o cliente.
 
-### Repository
-Interface de consulta e manipulação dos dados, utilizado para criar uma barreira de controle e segurança entre a aplicação e os dados.
+  ### Repository
+  Interface de consulta e manipulação dos dados, utilizado para criar uma barreira de controle e segurança entre a aplicação e os dados.
 
-### DTO
-Utilizado para transferir dados entre subsistemas do software.
+  ### DTO
+  Utilizado para transferir dados entre subsistemas do software.
 
-### Form 
-Utilizado para transferir dados entre subsistemas do software.
+  ### Form 
+  Utilizado para transferir dados entre subsistemas do software.
+
 
 Features
 -----
 
-<table border="0" width="100%" 
-cellpadding="10">
-<tr>
- 
-<td width="25%" valign="top" border="0">
-  
-## User
-- [x] CREATE
-- [x] UPDATE
-- [x] LIST
-- [x] DELETE
+  <table border="0" width="100%"
+  >
+  <tr>
 
-</td>
-<td width="25%" valign="top">
-  
-## Item
-- [x] CREATE
-- [x] LIST
-- [x] DELETE
+  <td width="50%" valign="top" border="0">
 
-</td>
-<td width="25%" valign="top">
-  
-## Comment
-- [x] CREATE
-- [x] LIST
-- [x] DELETE
+  ## User
+  - [x] CREATE
+  - [x] UPDATE
+  - [x] LIST
+  - [x] DELETE
 
-</td>
+  </td>
+  <td width="50%" valign="top">
 
-<td width="25%" valign="top">
+  ## Item
+  - [x] CREATE
+  - [x] LIST
+  - [x] DELETE
+
+  </td>
+  <td width="50%" valign="top">
+
+  ## Comment
+  - [x] CREATE
+  - [x] LIST
+  - [x] DELETE
+
+  </td>
+
+<td width="50%" valign="top">
   
 ## Upvote
 - [x] CREATE
@@ -113,7 +114,7 @@ API Doc & Sample
   #### Paths
   
     POST /auth/login
-    
+-----    
 ### Item Controller
 
  #### Content-Type
@@ -150,7 +151,7 @@ API Doc & Sample
   ```
   DELETE /items/{id}/upvotes
   ```
-  
+-----  
 ### User Controller
  
   #### Content-Type
