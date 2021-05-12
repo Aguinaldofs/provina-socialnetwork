@@ -11,23 +11,8 @@
 <h3 align="left">Experimental social network to share old exams and contents of INATEL!  </h3>
 
 
-Tabela de conteúdos
-=================
-<!--ts-->
-   * [API Requirements](#api-requirements)
-   * [Design Patterns](#design-patterns)
-   * [Instalação](#instalacao)
-   * [Como usar](#como-usar)
-      * [Pre Requisitos](#pre-requisitos)
-      * [Local files](#local-files)
-      * [Remote files](#remote-files)
-      * [Multiple files](#multiple-files)
-      * [Combo](#combo)
-   * [Tests](#testes)
-   * [Tecnologias](#tecnologias)
-<!--te-->
 
-API Requirements<a name="api-requirements"/>
+API Requirements
 -----
 ### Must to have
 - [x] Comunicar com uma API externa (desenvolvida pelo colaborador ou por terceiros).
@@ -40,7 +25,7 @@ API Requirements<a name="api-requirements"/>
 - [x] Segurança (ex: JWT).
 - [x] Cache.
 
-Design Patterns<a name="design-patterns"/>
+Design Patterns
 -----
   ### Model
   Detentor dos dados, recebe as informações do Controller, valida
