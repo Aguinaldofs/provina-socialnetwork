@@ -95,32 +95,32 @@ Setup
 API Doc & Sample
 ----------------
 
-- Authentication Controller
+###  Authentication Controller
   
-    Content-Type:
+  #### Content-Type
     ```
     application/json
     ```
-    Body:
+  #### Body
     ```
     {
     "email": "ag@gec.inatel.br",
     "password": "123456"
     }
     ```
-    Paths:
+  #### Paths
     ```
     POST /auth/login
     ```
-- Item Controller
+### Item Controller
 
-   Content-Type:
+ #### Content-Type
    ```
    application/json
    Authorization Bearer {{token}}
    ```
-   Paths:
-   ```
+ #### Paths
+  ```
   POST /items
   ```
    ```
@@ -141,21 +141,21 @@ API Doc & Sample
    ```
   DELETE /items/{id}/comments/{id}
   ```
-    ```
+  ```
   DELETE /items/{id}
   ```
   
    ```
   DELETE /items/{id}/upvotes
   ```
- - User Controller
+### User Controller
  
-   Content-Type:
+  #### Content-Type:
    ```
    application/json
    Authorization Bearer {{token}}
    ```
-    Paths:
+  #### Paths:
     
     ```
     POST /user
