@@ -151,13 +151,13 @@ API Doc & Sample
   
 ### User Controller
  
-  #### Content-Type:
+  #### Content-Type
    ```
    application/json
    
    Authorization Bearer {{token}}
    ```
-  #### Paths:
+  #### Paths
     
     POST /user
     
@@ -167,5 +167,23 @@ API Doc & Sample
    ```
    DELETE /user/{id}
    ```
+   
+External Tools
+----------------
 
- 
+  #### ElephantSQL
+  ```
+  https://www.elephantsql.com
+  ```
+  #### Cloudinary
+  ```
+  https://cloudinary.com
+  ```
+  #### Swagger
+  ```
+  https://swagger.io
+  ```
+  #### Heroku
+  ```
+  https://www.heroku.com
+  ```
