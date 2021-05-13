@@ -42,7 +42,7 @@
   Utilizado para transferir dados entre subsistemas do software.
 
   ### Form 
-  Utilizado para transferir dados entre subsistemas do software.
+  Utilizado para receber dados entre subsistemas do software.
 
 
 📚 Features
