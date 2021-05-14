@@ -7,7 +7,10 @@
 <h1 align="center">
     provina-socialnetwork-api
   <p><img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white"/> <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white"/> <img src="https://img.shields.io/badge/Eclipse-2C2255?style=for-the-badge&logo=eclipse&logoColor=white"/>
+  <img src ="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"/>
+  <img src ="https://img.shields.io/badge/-Cloudinary-blue?style=for-the-badge&logo=google-cloud&logoColor=white"/></p>
   <img src="https://img.shields.io/github/last-commit/Aguinaldofs/provina-socialnetwork?style=for-the-badge"></p>
+  
 </h1>
 <h3 align="center">Experimental social network to share old exams and contents of INATEL!  </h3>
 
