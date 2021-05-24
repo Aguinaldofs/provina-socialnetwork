@@ -17,8 +17,8 @@ public class CommentForm {
 		return text;
 	}
 
-	public Comment convert(User user, Item item, String media) {
-		Comment comment = new Comment(text, media, item, user);
+	public Comment convert(User user, Item item) {
+		Comment comment = new Comment(text, item, user);
 		return comment;
 	}
 

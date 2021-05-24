@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,6 +33,7 @@ import br.com.provina.config.cloudinary.CloudinaryService;
 import br.com.provina.controller.dto.CommentDto;
 import br.com.provina.controller.dto.ItemDetailDto;
 import br.com.provina.controller.dto.ItemDto;
+import br.com.provina.controller.form.CommentForm;
 import br.com.provina.model.Category;
 import br.com.provina.model.Comment;
 import br.com.provina.model.Item;
@@ -143,23 +145,17 @@ public class ItemController {
 
 	@PostMapping("/{id}/comments")
 	@Transactional
-	public ResponseEntity<?> addComment(Authentication authentication, @RequestParam("text") String text,
-			@PathVariable("id") Long id, @RequestParam(value = "file", required = false) MultipartFile file)
-			throws IOException {
+	public ResponseEntity<?> addComment(Authentication authentication, @RequestBody CommentForm commentForm,
+			@PathVariable Long id) throws IOException {
 
 		User authenticatedUser = (User) authentication.getPrincipal();
 		User user = userRepository.getOne(authenticatedUser.getId());
 
-		@SuppressWarnings("rawtypes")
-		Map uploadResult = cloudinaryService.upload(file, "images");
-
-		String media = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
-
 		Optional<Item> optional = itemRepository.findById(id);
 		if (optional.isPresent()) {
-			Comment comment = new Comment(text, file.getOriginalFilename(), optional.get(), user);
+			Comment comment = commentForm.convert(user, optional.get());
 			commentRepository.save(comment);
-			return ResponseEntity.created(null).build();
+			return ResponseEntity.created(null).body(new CommentDto(comment));
 		}
 
 		return ResponseEntity.notFound().build();

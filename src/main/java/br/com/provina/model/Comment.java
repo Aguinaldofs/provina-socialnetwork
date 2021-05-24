@@ -26,12 +26,11 @@ public class Comment {
 
 	}
 
-	public Comment(String text, String media, Item item, User user) {
+	public Comment(String text, Item item, User user) {
 		super();
 		this.text = text;
 		this.item = item;
 		this.user = user;
-		this.setMedia(media);
 	}
 
 	public Item getItem() {
